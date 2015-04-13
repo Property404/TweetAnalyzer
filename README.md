@@ -1,4 +1,6 @@
 # TweetAnalyzer
-Uses Tweepy tweets based on a query - stores all data in JSON and a wordcount in plaintext
+Uses Tweepy to read tweets based on a query
+Stores all data in JSON
+Performs wordcount and stores in plaintext
 
-Made for the Florida Polytechnic datacenter <name subject to change>
+Made for Florida Polytechnic Datacenter <name subject to change>
