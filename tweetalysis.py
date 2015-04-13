@@ -1,3 +1,7 @@
+# Dagan Martinez - 2015
+# Copyright (c) 2015 Dagan Martinez
+# Under GNU General Public License
+
 import tweepy
 from unicodedata import normalize
 import sys

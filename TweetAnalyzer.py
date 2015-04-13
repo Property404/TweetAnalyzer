@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Copyright (c) 2015 Dagan Martinez
+# Under GNU General Public License
 
 # import modules - STA includes Tweepy
 from tweetalysis import*
