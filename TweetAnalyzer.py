@@ -13,6 +13,7 @@ print("Authorizing application")
 auth = tweepy.OAuthHandler(open("keys/consumer_key", "r").read(), open("keys/consumer_secret", "r").read())
 api = tweepy.API(auth)
 
+
 # Collect tweets
 if sys.version_info[0] == 2:
     query = raw_input("Query>")
@@ -36,7 +37,7 @@ for tweet in tweets:
 
 # Get word counts
 sys.stdout.write("Doing Wordcount...          \r")
-wordcount=get_word_counts(get_words(tweet_texts, exclude=STOP_WORDS+TWITTER_WORDS+ALPHABET))
+wordcount = get_word_counts(get_words(tweet_texts, exclude=STOP_WORDS+TWITTER_WORDS+ALPHABET))
 
 
 # Export JSON

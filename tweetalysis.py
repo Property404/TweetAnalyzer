@@ -30,9 +30,9 @@ ALPHABET = "a b c d e f g h i j k l m n o p q r s t u v w x y z".split(" ")
 
 
 # Return list of Tweet objects based on search query. Must take tweepy.API object
-def get_tweets(api, q, lang="en", max_results=200):
+def get_tweets(api, q, lang=None, max_results=200, result_type='recent'):
     tweets = []
-    for tweet in tweepy.Cursor(api.search, q=q, lang=lang, count=100).items(max_results):
+    for tweet in tweepy.Cursor(api.search, q=q, lang=lang, count=100, result_type=result_type).items(max_results):
         tweets.append(tweet)
         sys.stdout.write(str(len(tweets))+" tweets\r")
     return tweets
@@ -45,7 +45,7 @@ def get_words(texts, exclude=[]):
     words = texts
     tempstring = ""
     for i in words:
-        tempstring += normalize('NFKD', i.lower()).encode('ascii', 'ignore').decode("utf-8")+" "#Remove non-ASCII characters
+        tempstring += normalize('NFKD', i.lower()).encode('ascii', 'ignore').decode("utf-8")+" "  # Remove non-ASCII characters
     for i in punctuation:
         tempstring = tempstring.replace(i, " ")
     while tempstring != tempstring.replace("  ", " "):
