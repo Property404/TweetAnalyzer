@@ -2,28 +2,27 @@
 # Copyright (c) 2015 Dagan Martinez
 # Under the MIT license
 
-# import modules - STA includes Tweepy
+# import modules - tweetalysis includes Tweepy
+print("Setting up...")
 from tweetalysis import*
 import json
 import sys
 
 
 # Authenticate application and create API object
-print("Authorizing application")
 auth = tweepy.OAuthHandler(open("keys/consumer_key", "r").read(), open("keys/consumer_secret", "r").read())
 api = tweepy.API(auth)
 
 
 # Collect tweets
 if sys.version_info[0] == 2:
-    query = raw_input("Query>")
+    query = raw_input("\nQuery>")
     max_number_of_results = int(raw_input("Max Results>"))
 else:
-    query = input("Query>")
+    query = input("\nQuery>")
     max_number_of_results = int(input("Max Results>"))
+print("")
 tweets = get_tweets(api, query, max_results=max_number_of_results)  # get 'max' results
-
-
 # Collect tweet text and JSON data
 sys.stdout.write("Converting Data...          \r")
 tweet_texts = []
@@ -57,6 +56,7 @@ wc_file.close()
 
 
 # Finish
-print("Finished.                    ")
+print("Finished:                    ")
 print("# of tweets exported:\t"+str(tweetcount))
 print("# of words exported:\t"+str(len(wordcount)))
+print("Tweets to wordcount:\t"+str(100*tweetcount/len(wordcount))+"%")
