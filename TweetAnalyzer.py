@@ -37,7 +37,7 @@ for tweet in tweets:
 
 
 # Get word counts
-sys.stdout.write("Doing Wordcount...          \r")
+sys.stdout.write("Performing Wordcount...          \r")
 wordcount = get_word_counts(get_words(tweet_texts, exclude=STOP_WORDS+TWITTER_WORDS+ALPHABET))
 
 
