@@ -23,7 +23,9 @@ else:
     max_number_of_results = int(input("Max Results>"))
 print("")
 tweets = get_tweets(api, query, max_results=max_number_of_results)  # get 'max' results
-# Collect tweet text and JSON data
+
+
+# Converting data
 sys.stdout.write("Converting Data...          \r")
 tweet_texts = []
 json_dump = ""
