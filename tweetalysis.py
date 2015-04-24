@@ -7,6 +7,7 @@ from unicodedata import normalize
 import sys
 import stop_words
 
+
 # Lists
 punctuation = ["http://t.co/", "\n", "\t", "\r", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=",
                "+", ", ", "<", ".", ">", "?", "/", "{", "[", "}", "]", "|", "\\", ":", ";", "'", '"']
@@ -29,10 +30,7 @@ def get_tweets(api, q, lang=None, max_results=200, result_type='recent'):
 def get_words(texts, exclude=[]):
     # Clean up punctuation and all that jazz (HaCha!)
     # By converting the word list to a string
-    words = texts
-    tempstring = ""
-    for i in words:
-        tempstring += normalize('NFKD', i.lower()).encode('ascii', 'ignore').decode("utf-8")+" "  # Remove non-ASCII characters
+    tempstring = normalize('NFKD', (" ".join(texts)).lower()).encode('ascii', 'ignore').decode("utf-8")+" "  # Remove non-ASCII characters
     for i in punctuation:
         tempstring = tempstring.replace(i, " ")
     while tempstring != tempstring.replace("  ", " "):
@@ -58,15 +56,11 @@ def get_word_counts(words):
             for i in words:
                 if i == word:
                     count += 1
-            wordcountlist.append([word, count])
+            wordcountlist.append([count, word])
             usedwordlist.append(word)
 
     # Bubble sort wordcountlist
-    for passnumber in range(len(wordcountlist)-1, 0, -1):
-        for i in range(passnumber):
-            if wordcountlist[i][1] > wordcountlist[i+1][1]:
-                temp = wordcountlist[i]
-                wordcountlist[i] = wordcountlist[i+1]
-                wordcountlist[i+1] = temp
+    wordcountlist.sort()
+
     # Return result
     return wordcountlist[::-1]

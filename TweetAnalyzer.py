@@ -7,7 +7,7 @@ print("Setting up...")
 from tweetalysis import*
 import json
 import sys
-
+import time
 
 # Authenticate application and create API object
 auth = tweepy.OAuthHandler(open("keys/consumer_key", "r").read(), open("keys/consumer_secret", "r").read())
@@ -23,7 +23,6 @@ else:
     max_number_of_results = int(input("Max Results>"))
 print("")
 tweets = get_tweets(api, query, max_results=max_number_of_results)  # get 'max' results
-
 
 # Converting data
 sys.stdout.write("Converting Data...          \r")
@@ -51,7 +50,7 @@ json_file.close()
 # Export word count
 wc_text = ""
 for i in wordcount:
-    wc_text += i[0]+":"+str(i[1])+"\n"
+    wc_text += i[1]+":"+str(i[0])+"\n"
 wc_file = open("twitter_dump("+query+")_wordcount.txt","w")
 wc_file.write(wc_text)
 wc_file.close()
