@@ -12,13 +12,12 @@ import stop_words
 punctuation = ["http://t.co/", "\n", "\t", "\r", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=",
                "+", ", ", "<", ".", ">", "?", "/", "{", "[", "}", "]", "|", "\\", ":", ";", "'", '"']
 STOP_WORDS = stop_words.get_stop_words('en')
-TWITTER_WORDS = ["","amp", "http", "https", "co", "com", "rt", "strl", "hstn", "t", "u", "1", "2", "3", "4", "5", "6",
-                 "7", "8", "9"]
-ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
+TWITTER_WORDS = ["", "amp", "http", "https", "co", "com", "rt", "strl", "hstn", "ll"]
+ALPHABET = list("abcdefghijklmnopqrstuvwxyz1234567890")
 
 
 # Return list of Tweet objects based on search query. Must take tweepy.API object
-def get_tweets(api, q, lang=None, max_results=200, result_type='recent'):
+def get_tweets(api, q, lang="en", max_results=200, result_type='recent'):
     tweets = []
     for tweet in tweepy.Cursor(api.search, q=q, lang=lang, count=100, result_type=result_type).items(max_results):
         tweets.append(tweet)

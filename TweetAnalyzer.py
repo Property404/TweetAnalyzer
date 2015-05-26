@@ -7,23 +7,31 @@ print("Setting up...")
 from tweetalysis import*
 import json
 import os
-import time
+import sys
 
 # Authenticate application and create API object
-key=open("keys/consumer_key", "r").read().replace("\n", "").replace(" ", "")
-secret=open("keys/consumer_secret", "r").read().replace("\n", "").replace(" ", "")
-auth =tweepy.OAuthHandler(key, secret)
+key = open("keys/consumer_key", "r").read().replace("\n", "").replace(" ", "")
+secret = open("keys/consumer_secret", "r").read().replace("\n", "").replace(" ", "")
+auth = tweepy.OAuthHandler(key, secret)
 api = tweepy.API(auth)
+
+query = ""
+auto = False
+if len(sys.argv) > 2:
+    query = sys.argv[1]
+    max_number_of_results = int(sys.argv[2])
+    auto = True
 
 
 # Collect tweets
-if os.sys.version_info[0] == 2:
+if os.sys.version_info[0] == 2 and not auto:
     query = raw_input("\nQuery>")
     max_number_of_results = int(raw_input("Max Results>"))
-else:
+elif not auto:
     query = input("\nQuery>")
     max_number_of_results = int(input("Max Results>"))
 print("")
+query = query.lower()
 tweets = get_tweets(api, query, max_results=max_number_of_results)  # get 'max' results
 
 # Converting data
@@ -33,23 +41,25 @@ json_dump = ""
 tweetcount = 0
 for tweet in tweets:
     tweet_texts.append(tweet.text)
-    json_dump += json.dumps(tweet._json)+"\n"
+    if not auto:
+        json_dump += json.dumps(tweet._json)+"\n"
     tweetcount += 1
 
 
 # Get word counts
 os.sys.stdout.write("Performing Wordcount...          \r")
-wordcount = get_word_counts(get_words(tweet_texts, exclude=STOP_WORDS+TWITTER_WORDS+ALPHABET))
+wordcount = get_word_counts(get_words(tweet_texts, exclude=STOP_WORDS+TWITTER_WORDS+ALPHABET+query.split(" ")))
 
 
 # Export JSON
 
 sys.stdout.write("Exporting Data...          \r")
-if not os.path.exists("twitter_data"):
-    os.makedirs("twitter_data")
-json_file = open("twitter_data/"+query+"_dump.json", "w")
-json_file.write(json_dump)
-json_file.close()
+if not auto:
+    if not os.path.exists("twitter_data"):
+        os.makedirs("twitter_data")
+    json_file = open("twitter_data/"+query+"_dump.json", "w")
+    json_file.write(json_dump)
+    json_file.close()
 
 
 # Export word count
